@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuthLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,8 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        AuthLog::log('login', $user->id);
+
         return response()->json([
             'message' => 'Success',
             'access_token' => $token,
@@ -32,7 +35,11 @@ class AuthController extends Controller
     {
         /** @var \App\Models\User $user **/
         $user = Auth::user();
+
         $user->tokens()->delete();
+
+        AuthLog::log('logout', $user->id);
+
         return response()->json([
             'message' => 'Success'
         ]);
