@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Models\Currency;
 use App\Models\Transaction;
@@ -44,12 +45,18 @@ class TransactionController extends Controller
         $currencyId = $request->integer('currency_id');
         $amount = $request->integer('amount');
 
-        $currency = Currency::findOrFail($currencyId);
+        $currency = Currency::find($currencyId);
+
+        if ($currency === null) abort(404, "Invalid currency ID");
+
+        $availableSellAmount = $this->findAvailableSellAmount(auth()->id(), $currencyId);
 
         $currencyRate = Http::get("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{$currency->code}/{$this->BASE_CURRENCY}.json")->json('idr');
         $currencyRate = round($currencyRate, 2);
 
         $total = $currencyRate * $amount;
+
+        if ($availableSellAmount <= $total) abort(429, "Insufficient balance");
 
         Transaction::create([
             'user_id' => auth()->id(),
@@ -64,5 +71,17 @@ class TransactionController extends Controller
         return response()->json([
             'message' => 'Success'
         ]);
+    }
+
+    public function findAvailableSellAmount(int $userId, int $currencyId)
+    {
+        $amount = DB::select("
+            SELECT SUM(CASE WHEN type = 'buy' THEN total ELSE total * -1 END) amount from transactions
+            WHERE user_id = {$userId}
+            AND currency_id = {$currencyId}
+        ");
+
+        if ($amount[0]->amount === null) return 0;
+        return round($amount[0]->amount, 2);
     }
 }
