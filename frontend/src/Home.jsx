@@ -24,9 +24,9 @@ export default function Home() {
       <Menu />
       <Grid>
         {currencies !== null &&
-          currencies.map((currency) => (
+          currencies.map((currency, index) => (
             <>
-              <Grid.Col span={4}>
+              <Grid.Col key={index} span={4}>
                 <Box code={currency.code} rate={currency.rate} />
               </Grid.Col>
             </>

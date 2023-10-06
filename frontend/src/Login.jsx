@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -26,7 +27,7 @@ export default function Login() {
     const response = await login.json();
     localStorage.setItem("token", response.access_token);
 
-    redirect("/home");
+    navigate("/home");
   }
 
   return (
