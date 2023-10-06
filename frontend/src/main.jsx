@@ -6,6 +6,7 @@ import App from "./App";
 import Login from "./Login";
 import Home from "./Home";
 import "@mantine/core/styles.css";
+import Summary from "./Summary";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/summary",
+    element: <Summary />,
   },
 ]);
 
