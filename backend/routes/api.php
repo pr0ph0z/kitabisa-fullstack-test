@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-
+Route::get('/currencies', [\App\Http\Controllers\Api\CurrencyController::class, 'currencies']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -26,5 +26,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sell', [\App\Http\Controllers\Api\TransactionController::class, 'sell']);
     Route::get('/summary', [\App\Http\Controllers\Api\TransactionController::class, 'summary']);
     Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/currencies', [\App\Http\Controllers\Api\CurrencyController::class, 'currencies']);
 });
