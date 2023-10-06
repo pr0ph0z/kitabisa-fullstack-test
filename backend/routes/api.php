@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sell', [\App\Http\Controllers\Api\TransactionController::class, 'sell']);
     Route::get('/summary', [\App\Http\Controllers\Api\TransactionController::class, 'summary']);
     Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
+    Route::get('/currencies', [\App\Http\Controllers\Api\CurrencyController::class, 'currencies']);
 });
