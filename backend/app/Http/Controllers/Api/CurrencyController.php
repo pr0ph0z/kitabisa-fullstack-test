@@ -60,7 +60,7 @@ class CurrencyController extends Controller
         $responses = collect($responses)
             ->map(fn ($response, $index) => [
                 "code" => $currencies[$index]['code'],
-                "rate" => $response['idr']
+                "rate" => round($response['idr'], 2)
             ]);
 
 
