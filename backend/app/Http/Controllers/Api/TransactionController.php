@@ -89,7 +89,7 @@ class TransactionController extends Controller
     public function summary(Request $request)
     {
         $period = $request->query('period');
-        if (!in_array($period, ['week', 'month'])) abort(400, "Invalid period value");
+        if (!in_array($period, ['day', 'week', 'month'])) abort(400, "Invalid period value");
         $userId = auth()->id();
 
         $summary = DB::select("
