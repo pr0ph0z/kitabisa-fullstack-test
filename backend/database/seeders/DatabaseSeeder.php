@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use \Database\Seeders\UserSeeder;
 use \Database\Seeders\CurrencySeeder;
+use \Database\Seeders\TransactionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            CurrencySeeder::class
+            CurrencySeeder::class,
+            TransactionSeeder::class,
         ]);
     }
 }

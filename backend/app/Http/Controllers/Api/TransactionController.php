@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SummaryResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -83,5 +84,28 @@ class TransactionController extends Controller
 
         if ($amount[0]->amount === null) return 0;
         return round($amount[0]->amount, 2);
+    }
+
+    public function summary(Request $request)
+    {
+        $period = $request->query('period');
+        if (!in_array($period, ['week', 'month'])) abort(400, "Invalid period value");
+        $userId = auth()->id();
+
+        $summary = DB::select("
+            SELECT currencies.name, summaries.* FROM (SELECT
+                currency_id,
+                COUNT(currency_id),
+                ROUND(SUM(CASE WHEN type = 'buy' THEN total ELSE 0 END)::numeric, 2) total_buy,
+                ROUND(SUM(CASE WHEN type = 'sell' THEN total ELSE 0 END)::numeric, 2) total_sell,
+                ROUND(SUM(CASE WHEN type = 'buy' THEN total ELSE total * -1 END)::numeric, 2) available_amount
+                FROM transactions
+                WHERE user_id = {$userId}
+                AND created_at >= NOW() - interval '1 {$period}' AND created_at <= NOW()
+                GROUP BY currency_id) summaries
+            INNER JOIN currencies on summaries.currency_id = currencies.id
+        ");
+
+        return SummaryResource::collection($summary);
     }
 }
