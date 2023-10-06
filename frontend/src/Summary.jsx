@@ -1,16 +1,17 @@
-import { Table } from "@mantine/core";
+import { Table, Select } from "@mantine/core";
 import { useState, useEffect } from "react";
 
 import Menu from "./Menu";
 
 export default function Summary() {
   const [summary, setSummary] = useState([]);
+  const [period, setPeriod] = useState("day");
 
   useEffect(() => {
     fetch(
       "http://localhost:8000/api/summary?" +
         new URLSearchParams({
-          period: "week",
+          period: period,
         }),
       {
         headers: {
@@ -20,7 +21,7 @@ export default function Summary() {
     )
       .then((response) => response.json())
       .then((currencies) => setSummary(currencies.data));
-  }, []);
+  }, [period]);
 
   const rows = summary.map((summaryTx) => (
     <Table.Tr key={summaryTx.currency_id}>
@@ -34,6 +35,17 @@ export default function Summary() {
   return (
     <>
       <Menu />
+      <Select
+        label="Select transaction period"
+        placeholder="Pick period"
+        data={[
+          { value: "day", label: "Today" },
+          { value: "week", label: "1 Week" },
+          { value: "month", label: "1 Month" },
+        ]}
+        value={period}
+        onChange={setPeriod}
+      />
       <Table highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>
           <Table.Tr>
