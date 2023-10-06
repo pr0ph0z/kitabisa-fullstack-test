@@ -2,6 +2,7 @@ import { Grid } from "@mantine/core";
 import { useState, useEffect } from "react";
 
 import Box from "./Box";
+import Menu from "./Menu";
 
 export default function Home() {
   const [currencies, setCurrencies] = useState(null);
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <>
+      <Menu />
       <Grid>
         {currencies !== null &&
           currencies.map((currency) => (

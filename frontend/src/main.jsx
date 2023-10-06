@@ -2,6 +2,7 @@ import { MantineProvider } from "@mantine/core";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "./App";
 import Login from "./Login";
 import Home from "./Home";
 import "@mantine/core/styles.css";
@@ -9,6 +10,10 @@ import "@mantine/core/styles.css";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <App />,
+  },
+  {
+    path: "/login",
     element: <Login />,
   },
   {
