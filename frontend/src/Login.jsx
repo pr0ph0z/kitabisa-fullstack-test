@@ -26,7 +26,7 @@ export default function Login() {
     const response = await login.json();
     localStorage.setItem("token", response.access_token);
 
-    redirect("/");
+    redirect("/home");
   }
 
   return (
