@@ -16,7 +16,9 @@ This repository contains for the technical test assignment for Kitabisa as a Ful
 There's a `docker-compose.yml` available so you can spin up the service in a single `docker compose up -d` command. After the services are up, execute Laravel migration command with `docker exec backend php artisan migrate --seed`. The services will run on the local machines with:
 
 - Port `8000` for the backend
-- Port `8081` for the frontend
+- Port `8081` for the
+
+The demo account can be accessed with `usertest@gmail.com` as the email and `password` as the password
 
 ## Caveats
 
@@ -26,3 +28,4 @@ There are several points that I envisioned. However I did not succeed to achieve
 2. Unit tests
 3. Well structured code and design pattern
 4. Currency rate-locking mechanisms
+5. Use username instead of email for the authentication
