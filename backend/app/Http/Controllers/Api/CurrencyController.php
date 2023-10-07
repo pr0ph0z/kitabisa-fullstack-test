@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Http\Client\Pool;
 use GuzzleHttp\Promise\Utils;
+use App\Models\Currency;
 
 class CurrencyController extends Controller
 {
@@ -14,37 +15,7 @@ class CurrencyController extends Controller
 
     public function currencies()
     {
-        $currencies = [[
-            'code' => 'usd',
-            'name' => 'US dollar'
-        ], [
-            'code' => 'eur',
-            'name' => 'Euro'
-        ], [
-            'code' => 'jpy',
-            'name' => 'Japanese yen'
-        ], [
-            'code' => 'gbp',
-            'name' => 'Pound sterling'
-        ], [
-            'code' => 'aud',
-            'name' => 'Australian dollar'
-        ], [
-            'code' => 'cad',
-            'name' => 'Canadian dollar'
-        ], [
-            'code' => 'chf',
-            'name' => 'Swiss franc'
-        ], [
-            'code' => 'cny',
-            'name' => 'Chinese yuan'
-        ], [
-            'code' => 'hkd',
-            'name' => 'Hong Kong dollar'
-        ], [
-            'code' => 'nzd',
-            'name' => 'New Zealand dollar'
-        ]];
+        $currencies = Currency::all();
 
         $url = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/%s/%s.json";
         $promises = [];
@@ -59,6 +30,7 @@ class CurrencyController extends Controller
         });
         $responses = collect($responses)
             ->map(fn ($response, $index) => [
+                "id" => $currencies[$index]['id'],
                 "code" => $currencies[$index]['code'],
                 "name" => $currencies[$index]['name'],
                 "rate" => round($response['idr'], 2)
