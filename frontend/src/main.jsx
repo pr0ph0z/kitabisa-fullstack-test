@@ -7,6 +7,7 @@ import Login from "./Login";
 import Home from "./Home";
 import "@mantine/core/styles.css";
 import Summary from "./Summary";
+import BuyTransaction from "./BuyTransaction";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/summary",
     element: <Summary />,
+  },
+  {
+    path: "/buy",
+    element: <BuyTransaction />,
   },
 ]);
 

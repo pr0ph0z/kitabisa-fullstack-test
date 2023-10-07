@@ -18,6 +18,7 @@ export default function Menu() {
   return (
     <>
       <Link to="/home">Home</Link>
+      <Link to="/buy">Buy Transaction</Link>
       <Link to="/summary">Summary</Link>
       <Link to="#" onClick={logout}>
         Logout

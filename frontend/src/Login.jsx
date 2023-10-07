@@ -32,7 +32,6 @@ export default function Login() {
 
   return (
     <>
-      {error !== "" && <span>{error}</span>}
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -50,6 +49,7 @@ export default function Login() {
         />
         <button type="submit">{loading ? "Loading" : "Login"}</button>
       </form>
+      {error !== "" && <span>Error: {error}</span>}
     </>
   );
 }

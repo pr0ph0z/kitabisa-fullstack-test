@@ -20,7 +20,7 @@ export default function Summary() {
       }
     )
       .then((response) => response.json())
-      .then((currencies) => setSummary(currencies.data));
+      .then((summary) => setSummary(summary.data));
   }, [period]);
 
   const rows = summary.map((summaryTx) => (
@@ -57,14 +57,6 @@ export default function Summary() {
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
-      {/* {summary !== null &&
-        currencies.map((currency, index) => (
-          <>
-            <Grid.Col key={index} span={4}>
-              <Box code={currency.code} rate={currency.rate} />
-            </Grid.Col>
-          </>
-        ))} */}
     </>
   );
 }
