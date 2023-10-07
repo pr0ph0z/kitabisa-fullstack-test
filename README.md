@@ -29,3 +29,4 @@ There are several points that I envisioned. However I did not succeed to achieve
 3. Well structured code and design pattern
 4. Currency rate-locking mechanisms
 5. Use username instead of email for the authentication
+6. Route guard on frontend
