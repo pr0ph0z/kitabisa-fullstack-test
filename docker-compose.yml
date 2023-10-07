@@ -10,7 +10,7 @@ services:
       image: nginx:alpine
       container_name: nginx
       ports:
-        - "8080:80"
+        - "8000:80"
       volumes:
         - ./backend:/var/www
         - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -52,3 +52,11 @@ services:
         - db
       networks:
         - nukerduit
+    
+    frontend_app:
+      container_name: frontend
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      ports:
+        - "8081:80"
