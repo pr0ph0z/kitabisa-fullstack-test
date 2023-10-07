@@ -1,8 +1,9 @@
 import { Grid } from "@mantine/core";
 import { useState, useEffect } from "react";
 
-import Box from "./Box";
-import Menu from "./Menu";
+import Box from "../components/Box";
+import BaseLayout from "../BaseLayout";
+import { Heading } from "@chakra-ui/react";
 
 export default function Home() {
   const [currencies, setCurrencies] = useState(null);
@@ -20,18 +21,20 @@ export default function Home() {
   console.log(currencies);
 
   return (
-    <>
-      <Menu />
-      <Grid>
-        {currencies !== null &&
-          currencies.map((currency, index) => (
+    <BaseLayout>
+      <Heading mb={12}>Home</Heading>
+
+      {currencies !== null && (
+        <Grid>
+          {currencies.map((currency, index) => (
             <>
-              <Grid.Col key={index} span={4}>
+              <Grid.Col key={index} span={3}>
                 <Box code={currency.code} rate={currency.rate} />
               </Grid.Col>
             </>
           ))}
-      </Grid>
-    </>
+        </Grid>
+      )}
+    </BaseLayout>
   );
 }

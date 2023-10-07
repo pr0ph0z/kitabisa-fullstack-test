@@ -3,12 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import Login from "./Login";
-import Home from "./Home";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
 import "@mantine/core/styles.css";
-import Summary from "./Summary";
-import BuyTransaction from "./BuyTransaction";
-import SellTransaction from "./SellTransaction";
+import Summary from "./pages/Summary";
+import BuyTransaction from "./pages/BuyTransaction";
+import SellTransaction from "./pages/SellTransaction";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MantineProvider>
-      <RouterProvider router={router} />
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
     </MantineProvider>
   </React.StrictMode>
 );

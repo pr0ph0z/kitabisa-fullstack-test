@@ -1,7 +1,8 @@
 import { Table, Select } from "@mantine/core";
 import { useState, useEffect } from "react";
 
-import Menu from "./Menu";
+import { Heading, Box } from "@chakra-ui/react";
+import BaseLayout from "../BaseLayout";
 
 export default function Summary() {
   const [summary, setSummary] = useState([]);
@@ -33,19 +34,21 @@ export default function Summary() {
   ));
 
   return (
-    <>
-      <Menu />
-      <Select
-        label="Select transaction period"
-        placeholder="Pick period"
-        data={[
-          { value: "day", label: "Today" },
-          { value: "week", label: "1 Week" },
-          { value: "month", label: "1 Month" },
-        ]}
-        value={period}
-        onChange={setPeriod}
-      />
+    <BaseLayout>
+      <Heading mb={12}>Summary</Heading>
+      <Box mb={8}>
+        <Select
+          label="Select transaction period"
+          placeholder="Pick period"
+          data={[
+            { value: "day", label: "Today" },
+            { value: "week", label: "1 Week" },
+            { value: "month", label: "1 Month" },
+          ]}
+          value={period}
+          onChange={setPeriod}
+        />
+      </Box>
       <Table highlightOnHover withTableBorder withColumnBorders>
         <Table.Thead>
           <Table.Tr>
@@ -57,6 +60,6 @@ export default function Summary() {
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
-    </>
+    </BaseLayout>
   );
 }

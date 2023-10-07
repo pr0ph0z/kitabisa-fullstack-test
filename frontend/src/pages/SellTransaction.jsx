@@ -1,10 +1,10 @@
 import { Select, NumberInput, Button } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import BaseLayout from "../BaseLayout";
+import { Heading, Flex } from "@chakra-ui/react";
 
-import Menu from "./Menu";
-
-export default function Summary() {
+export default function SellTransaction() {
   const [currencies, setCurrencies] = useState([]);
   const [currency, setCurrency] = useState("");
   const [amount, setAmount] = useState(0);
@@ -53,40 +53,42 @@ export default function Summary() {
   }
 
   return (
-    <>
-      <Menu />
-      <Select
-        label="Currency"
-        placeholder="Select Currency"
-        data={currencies.map((currency) => ({
-          value: currency.id.toString(),
-          label: currency.name,
-        }))}
-        value={currency}
-        onChange={(value) => {
-          setCurrency(value);
-          calculateTotal(value, amount);
-        }}
-      />
-      <NumberInput
-        label="Amount"
-        placeholder="Input amount"
-        allowNegative={false}
-        allowDecimal={false}
-        value={amount}
-        onChange={(value) => {
-          setAmount(value);
-          calculateTotal(currency, value);
-        }}
-      />
-      <NumberInput
-        disabled={true}
-        label="Total in IDR"
-        placeholder="Total"
-        allowNegative={false}
-        decimalScale={2}
-        value={total}
-      />
+    <BaseLayout>
+      <Heading mb={12}>Sell Transaction</Heading>
+      <Flex direction="column" rowGap="10px" mb="20px">
+        <Select
+          label="Currency"
+          placeholder="Select Currency"
+          data={currencies.map((currency) => ({
+            value: currency.id.toString(),
+            label: currency.name,
+          }))}
+          value={currency}
+          onChange={(value) => {
+            setCurrency(value);
+            calculateTotal(value, amount);
+          }}
+        />
+        <NumberInput
+          label="Amount"
+          placeholder="Input amount"
+          allowNegative={false}
+          allowDecimal={false}
+          value={amount}
+          onChange={(value) => {
+            setAmount(value);
+            calculateTotal(currency, value);
+          }}
+        />
+        <NumberInput
+          disabled={true}
+          label="Total in IDR"
+          placeholder="Total"
+          allowNegative={false}
+          decimalScale={2}
+          value={total}
+        />
+      </Flex>
 
       <div style={{ marginTop: "5px" }}>
         <Button variant="filled" color="red" onClick={resetState}>
@@ -103,6 +105,6 @@ export default function Summary() {
       </div>
 
       {error && <span>Error: {error}</span>}
-    </>
+    </BaseLayout>
   );
 }
